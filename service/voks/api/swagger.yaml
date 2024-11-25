@@ -1,0 +1,680 @@
+openapi: 3.0.0
+info:
+  title: vOKS IaC API
+  description: This is required APIs to develop vOKS IaC
+  version: 1.0.0
+servers:
+- url: https://dev-api.cmp.vtdc.local/csa
+  description: Develop
+- url: https://api.viettelidc.com.vn/csa
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Cluster
+  description: Cluster Resource
+- name: Node Group
+  description: Node Group
+- name: NFS
+  description: NFS Storage
+- name: Add On
+  description: Add On
+paths:
+  /api/v1/iac/kubernetes/cluster/detail:
+    post:
+      tags:
+      - Cluster
+      summary: Get detail cluster
+      description: |
+        Retrieve detailed information about a specific Kubernetes cluster.
+      operationId: detailCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseResourceReq'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailClusterResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/kube-config:
+    post:
+      tags:
+      - Cluster
+      summary: Get cluster kube-config
+      description: |
+        Retrieve the kube-config for a specific Kubernetes cluster.
+      operationId: kubeConfigCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseResourceReq'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDetailClusterKubeConfigResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/group/create:
+    post:
+      tags:
+      - Node Group
+      summary: Create node group
+      description: |
+        Create a new node group within a Kubernetes cluster.
+      operationId: createNodeGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNodeGroupRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailNodeGroupResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/group/update:
+    post:
+      tags:
+      - Node Group
+      summary: Update node group
+      description: |
+        Update the configuration of an existing node group within a Kubernetes cluster.
+      operationId: updateNodeGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateNodeGroupRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailNodeGroupResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/group/detail:
+    post:
+      tags:
+      - Node Group
+      summary: Get detail node group
+      description: |
+        Retrieve detailed information about a specific node group within a Kubernetes cluster.
+      operationId: detailNodeGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DetailNodeGroupRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailNodeGroupResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/group/delete:
+    post:
+      tags:
+      - Node Group
+      summary: Delete node group
+      description: |
+        Delete a specific node group from a Kubernetes cluster.
+      operationId: deleteNodeGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteNodeGroupRequest'
+        required: true
+      responses:
+        "204":
+          description: The request was successful.
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/nfs/detail:
+    post:
+      tags:
+      - NFS
+      summary: Detail NFS Storage
+      description: |
+        Retrieve detailed information about a specific NFS storage within a Kubernetes cluster.
+      operationId: detailNfsStorage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseResourceReq'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDetailNFSResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/nfs/add-ons:
+    post:
+      tags:
+      - NFS
+      summary: Extend NFS Storage
+      description: |
+        Extend the storage capacity of a specific NFS storage within a Kubernetes cluster.
+      operationId: extendNfsStorage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddonNFSRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/add-on/detail:
+    post:
+      tags:
+      - Add On
+      summary: Get detail Addon
+      description: |
+        Retrieve detailed information about a specific add-on within a Kubernetes cluster.
+      operationId: getDetailAddon
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetDetailAddonRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDetailAddOnResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/add-on/install:
+    post:
+      tags:
+      - Add On
+      summary: Install Add On
+      description: |
+        Install a specific add-on within a Kubernetes cluster.
+      operationId: installAddOn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddonInstallRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/add-on/uninstall:
+    post:
+      tags:
+      - Add On
+      summary: Uninstall Add On
+      description: |
+        Uninstall a specific add-on within a Kubernetes cluster.
+      operationId: uninstallAddOn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddonUninstallRequest'
+        required: true
+      responses:
+        "200":
+          description: The request was successful.
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+components:
+  schemas:
+    BaseResourceReq:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+    DetailClusterResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: uuid
+        name:
+          type: string
+        vpcId:
+          type: integer
+          example: 1234
+        vpcNetwork:
+          type: string
+          example: vpc-network-123
+        version:
+          type: string
+          example: v1.29.8
+        mode:
+          type: string
+          example: paygo
+        status:
+          type: string
+          enum:
+          - SUCCESS
+          - UPDATING
+          - ERROR
+        apiAddress:
+          type: string
+          example: https://172.16.12.12:8080
+      example:
+        mode: paygo
+        vpcId: 1234
+        name: name
+        apiAddress: https://172.16.12.12:8080
+        id: 0
+        vpcNetwork: vpc-network-123
+        version: v1.29.8
+        status: SUCCESS
+    GetDetailClusterKubeConfigResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          format: uuid
+        kubeConfig:
+          type: string
+      example:
+        kubeConfig: kubeConfig
+        clusterId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    GetListSupportedVersionResp:
+      type: array
+      items:
+        type: string
+        example: v1.0.0
+    CreateNodeGroupRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: k8s-node-group
+        resourceType:
+          type: string
+          example: T1.vOKS 1
+        isAutoScale:
+          type: boolean
+        minNode:
+          type: integer
+          example: 1
+        maxNode:
+          type: integer
+          example: 5
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeGroupLabel'
+        taints:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeGroupTaint'
+    NodeGroupTaint:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        effect:
+          type: string
+          enum:
+          - NoSchedule
+          - NoExcute
+          - PreferNoSchedule
+      example:
+        effect: NoSchedule
+        value: value
+        key: key
+    NodeGroupLabel:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      example:
+        value: value
+        key: key
+    DetailNodeGroupRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        id:
+          type: integer
+          example: 1234
+    DetailNodeGroupResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: k8s-node-group
+        clusterId:
+          type: integer
+          example: 1234
+        status:
+          type: string
+          enum:
+          - CREATING
+          - UPDATING
+          - SUCCESS
+          - ERROR
+        resourceType:
+          type: string
+          example: T1.vOKS 1
+        isAutoScale:
+          type: boolean
+        minNode:
+          type: integer
+          example: 1
+        maxNode:
+          type: integer
+          example: 5
+        isAutoRepair:
+          type: boolean
+          example: true
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeGroupLabel'
+        taints:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeGroupTaint'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+      example:
+        isAutoScale: true
+        clusterId: 1234
+        maxNode: 5
+        taints:
+        - effect: NoSchedule
+          value: value
+          key: key
+        - effect: NoSchedule
+          value: value
+          key: key
+        labels:
+        - value: value
+          key: key
+        - value: value
+          key: key
+        createdAt: 2016-08-29T09:12:33.001Z
+        minNode: 1
+        isAutoRepair: true
+        name: k8s-node-group
+        id: 1234
+        status: CREATING
+        resourceType: T1.vOKS 1
+        updatedAt: 2016-08-29T09:12:33.001Z
+    Node:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        instanceType:
+          type: string
+          example: 2 vCPU - 4GB RAM - 50GB SSD
+        startTime:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        endTime:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+    UpdateNodeGroupRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        id:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: k8s-node-group-name
+        isAutoScale:
+          type: boolean
+        minNode:
+          type: integer
+          example: 1
+        maxNode:
+          type: integer
+          example: 3
+        isAutoRepair:
+          type: boolean
+          example: true
+    DeleteNodeGroupRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        id:
+          type: integer
+          example: 1234
+    GetDetailNFSResponse:
+      type: object
+      properties:
+        clusterId:
+          type: integer
+          example: 1234
+        status:
+          type: string
+          enum:
+          - UPDATING
+          - POWER_ON
+          - ERROR
+        internalIp:
+          type: string
+          example: 10.6.44.115
+        memorySize:
+          type: number
+        cpuSize:
+          type: number
+        storageSize:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+      example:
+        createdAt: 2016-08-29T09:12:33.001Z
+        memorySize: 0.8008281904610115
+        cpuSize: 6.027456183070403
+        storageSize: 1.4658129805029452
+        clusterId: 1234
+        internalIp: 10.6.44.115
+        status: UPDATING
+        updatedAt: 2016-08-29T09:12:33.001Z
+    AddonNFSRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        addOnsStorage:
+          type: integer
+    GetAllAddonResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Addon'
+    Addon:
+      type: object
+      properties:
+        addOnName:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        version:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddonVersion'
+    AddonVersion:
+      type: object
+      properties:
+        versionId:
+          type: string
+          format: uuid
+        versionName:
+          type: string
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - INSTALLING
+          - UNINSTALLING
+    GetDetailAddonRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          example: 1234
+        clusterId:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: Prometheus
+    GetDetailAddOnResponse:
+      type: object
+      properties:
+        clusterId:
+          type: integer
+          example: 1234
+        id:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: Prometheus
+        description:
+          type: string
+          example: description
+        version:
+          type: string
+          example: 1.2.0
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          - INSTALLING
+          - UNINSTALLING
+      example:
+        name: Prometheus
+        description: description
+        clusterId: 1234
+        id: 1234
+        version: 1.2.0
+        status: ACTIVE
+    AddonInstallRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+          example: "1234"
+        clusterId:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: Prometheus
+        version:
+          type: string
+          example: Prometheus
+    AddonUninstallRequest:
+      type: object
+      properties:
+        customerId:
+          type: string
+          example: "1234"
+        clusterId:
+          type: integer
+          example: 1234
+        name:
+          type: string
+          example: Prometheus
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
