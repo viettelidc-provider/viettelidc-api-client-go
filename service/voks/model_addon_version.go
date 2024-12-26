@@ -11,5 +11,4 @@ package voks
 type AddonVersion struct {
 	VersionId   string `json:"versionId,omitempty"`
 	VersionName string `json:"versionName,omitempty"`
-	Status      string `json:"status,omitempty"`
 }

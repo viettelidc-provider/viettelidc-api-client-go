@@ -8,13 +8,18 @@
  */
 package voks
 
+import (
+	"time"
+)
+
 type DetailClusterResponse struct {
-	Id         int32  `json:"id,omitempty"`
-	Name       string `json:"name,omitempty"`
-	VpcId      int32  `json:"vpcId,omitempty"`
-	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	Version    string `json:"version,omitempty"`
-	Mode       string `json:"mode,omitempty"`
-	Status     string `json:"status,omitempty"`
-	ApiAddress string `json:"apiAddress,omitempty"`
+	Id         int32      `json:"id,omitempty"`
+	Name       string     `json:"name,omitempty"`
+	VpcConfig  *VpcConfig `json:"vpcConfig,omitempty"`
+	Version    string     `json:"version,omitempty"`
+	Mode       string     `json:"mode,omitempty"`
+	Status     string     `json:"status,omitempty"`
+	ApiAddress string     `json:"apiAddress,omitempty"`
+	CreatedAt  time.Time  `json:"createdAt,omitempty"`
+	UpdatedAt  time.Time  `json:"updatedAt,omitempty"`
 }

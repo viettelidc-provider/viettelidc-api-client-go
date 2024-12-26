@@ -20,20 +20,49 @@ tags:
 - name: Add On
   description: Add On
 paths:
-  /api/v1/iac/kubernetes/cluster/detail:
-    post:
+  /api/v1/iac/kubernetes/cluster/all:
+    get:
+      tags:
+      - Cluster
+      summary: Get all cluster
+      description: |
+        Retrieve list all of the Kubernetes cluster.
+      operationId: allCluster
+      parameters:
+      - name: name
+        in: query
+        description: A query parameter to search for a specific name by exact match.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllClusterResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/{clusterId}:
+    get:
       tags:
       - Cluster
       summary: Get detail cluster
       description: |
         Retrieve detailed information about a specific Kubernetes cluster.
       operationId: detailCluster
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BaseResourceReq'
+      parameters:
+      - name: clusterId
+        in: path
+        description: The ID of a Cluster
         required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
         "200":
           description: The request was successful.
@@ -64,6 +93,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDetailClusterKubeConfigResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/{clusterId}/node-group/all:
+    get:
+      tags:
+      - Node Group
+      summary: Get all node group
+      description: |
+        Retrieve list all of the node group within a Kubernetes cluster.
+      operationId: allNodeGroup
+      parameters:
+      - name: clusterId
+        in: path
+        description: The ID of a Cluster
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: A query parameter to search for a specific name by exact match.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DetailNodeGroupResponse'
         "400":
           description: The request was invalid or cannot be otherwise served.
   /api/v1/iac/kubernetes/cluster/group/create:
@@ -112,20 +175,31 @@ paths:
                 $ref: '#/components/schemas/DetailNodeGroupResponse'
         "400":
           description: The request was invalid or cannot be otherwise served.
-  /api/v1/iac/kubernetes/cluster/group/detail:
-    post:
+  /api/v1/iac/kubernetes/cluster/{clusterId}/node-group/{groupId}:
+    get:
       tags:
       - Node Group
       summary: Get detail node group
       description: |
         Retrieve detailed information about a specific node group within a Kubernetes cluster.
       operationId: detailNodeGroup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DetailNodeGroupRequest'
+      parameters:
+      - name: clusterId
+        in: path
+        description: The ID of a Cluster
         required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: groupId
+        in: path
+        description: The ID of a Cluster
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
       responses:
         "200":
           description: The request was successful.
@@ -196,20 +270,110 @@ paths:
           description: The request was successful.
         "400":
           description: The request was invalid or cannot be otherwise served.
-  /api/v1/iac/kubernetes/cluster/add-on/detail:
-    post:
+  /api/v1/iac/kubernetes/cluster/add-on/all:
+    get:
+      tags:
+      - Add On
+      summary: Get all Add On
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      operationId: getAllAddOn
+      parameters:
+      - name: name
+        in: query
+        description: A query parameter to search for a specific resource by exact
+          match.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: kubernetesVersion
+        in: query
+        description: Kubernetes version
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAddonResponse'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/add-on/versions:
+    get:
+      tags:
+      - Add On
+      summary: Get all Add On Version (order by lasted version descending)
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      operationId: getAllAddonVersion
+      parameters:
+      - name: addonName
+        in: query
+        description: The name of the addon
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: A query parameter to search for a specific version by exact match.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: kubernetesVersion
+        in: query
+        description: Kubernetes version
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllAddonVersionResp'
+        "400":
+          description: The request was invalid or cannot be otherwise served.
+  /api/v1/iac/kubernetes/cluster/{clusterId}/add-on:
+    get:
       tags:
       - Add On
       summary: Get detail Addon
       description: |
         Retrieve detailed information about a specific add-on within a Kubernetes cluster.
       operationId: getDetailAddon
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetDetailAddonRequest'
+      parameters:
+      - name: clusterId
+        in: path
+        description: The id of the cluster
         required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      - name: addonName
+        in: query
+        description: The name of the addon
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: The request was successful.
@@ -268,6 +432,11 @@ components:
         clusterId:
           type: integer
           example: 1234
+    GetAllClusterResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/DetailClusterResponse'
+      x-schema-name: GetAllClusterResponse
     DetailClusterResponse:
       type: object
       properties:
@@ -276,12 +445,8 @@ components:
           format: uuid
         name:
           type: string
-        vpcId:
-          type: integer
-          example: 1234
-        vpcNetwork:
-          type: string
-          example: vpc-network-123
+        vpcConfig:
+          $ref: '#/components/schemas/VpcConfig'
         version:
           type: string
           example: v1.29.8
@@ -297,15 +462,56 @@ components:
         apiAddress:
           type: string
           example: https://172.16.12.12:8080
+        createdAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
       example:
         mode: paygo
-        vpcId: 1234
+        createdAt: 2016-08-29T09:12:33.001Z
+        vpcConfig:
+          securityGroupIds:
+          - 1
+          - 1
+          vpcId: 6
+          vpcNetwork: vpcNetwork
+          subnetIds:
+          - 5
+          - 5
         name: name
         apiAddress: https://172.16.12.12:8080
         id: 0
-        vpcNetwork: vpc-network-123
         version: v1.29.8
         status: SUCCESS
+        updatedAt: 2016-08-29T09:12:33.001Z
+    VpcConfig:
+      type: object
+      properties:
+        vpcId:
+          type: integer
+        vpcNetwork:
+          type: string
+        securityGroupIds:
+          type: array
+          items:
+            type: integer
+        subnetIds:
+          type: array
+          items:
+            type: integer
+      example:
+        securityGroupIds:
+        - 1
+        - 1
+        vpcId: 6
+        vpcNetwork: vpcNetwork
+        subnetIds:
+        - 5
+        - 5
     GetDetailClusterKubeConfigResponse:
       type: object
       properties:
@@ -570,10 +776,16 @@ components:
           example: 1234
         addOnsStorage:
           type: integer
+    GetAllAddonVersionResp:
+      type: array
+      items:
+        $ref: '#/components/schemas/AddonVersion'
+      x-schema-name: GetAllAddonVersionResp
     GetAllAddonResponse:
       type: array
       items:
         $ref: '#/components/schemas/Addon'
+      x-schema-name: GetAllAddonResponse
     Addon:
       type: object
       properties:
@@ -583,10 +795,10 @@ components:
           type: string
         description:
           type: string
-        version:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddonVersion'
+      example:
+        description: description
+        category: category
+        addOnName: addOnName
     AddonVersion:
       type: object
       properties:
@@ -595,13 +807,9 @@ components:
           format: uuid
         versionName:
           type: string
-        status:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          - INSTALLING
-          - UNINSTALLING
+      example:
+        versionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        versionName: versionName
     GetDetailAddonRequest:
       type: object
       properties:

@@ -9,8 +9,7 @@
 package voks
 
 type Addon struct {
-	AddOnName   string         `json:"addOnName,omitempty"`
-	Category    string         `json:"category,omitempty"`
-	Description string         `json:"description,omitempty"`
-	Version     []AddonVersion `json:"version,omitempty"`
+	AddOnName   string `json:"addOnName,omitempty"`
+	Category    string `json:"category,omitempty"`
+	Description string `json:"description,omitempty"`
 }

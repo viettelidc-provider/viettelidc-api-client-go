@@ -21,16 +21,20 @@ All URIs are relative to *https://dev-api.cmp.vtdc.local/csa*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AddOnApi* | [**GetDetailAddon**](docs/AddOnApi.md#getdetailaddon) | **Post** /api/v1/iac/kubernetes/cluster/add-on/detail | Get detail Addon
+*AddOnApi* | [**GetAllAddOn**](docs/AddOnApi.md#getalladdon) | **Get** /api/v1/iac/kubernetes/cluster/add-on/all | Get all Add On
+*AddOnApi* | [**GetAllAddonVersion**](docs/AddOnApi.md#getalladdonversion) | **Get** /api/v1/iac/kubernetes/cluster/add-on/versions | Get all Add On Version (order by lasted version descending)
+*AddOnApi* | [**GetDetailAddon**](docs/AddOnApi.md#getdetailaddon) | **Get** /api/v1/iac/kubernetes/cluster/{clusterId}/add-on | Get detail Addon
 *AddOnApi* | [**InstallAddOn**](docs/AddOnApi.md#installaddon) | **Post** /api/v1/iac/kubernetes/cluster/add-on/install | Install Add On
 *AddOnApi* | [**UninstallAddOn**](docs/AddOnApi.md#uninstalladdon) | **Post** /api/v1/iac/kubernetes/cluster/add-on/uninstall | Uninstall Add On
-*ClusterApi* | [**DetailCluster**](docs/ClusterApi.md#detailcluster) | **Post** /api/v1/iac/kubernetes/cluster/detail | Get detail cluster
+*ClusterApi* | [**AllCluster**](docs/ClusterApi.md#allcluster) | **Get** /api/v1/iac/kubernetes/cluster/all | Get all cluster
+*ClusterApi* | [**DetailCluster**](docs/ClusterApi.md#detailcluster) | **Get** /api/v1/iac/kubernetes/cluster/{clusterId} | Get detail cluster
 *ClusterApi* | [**KubeConfigCluster**](docs/ClusterApi.md#kubeconfigcluster) | **Post** /api/v1/iac/kubernetes/cluster/kube-config | Get cluster kube-config
 *NFSApi* | [**DetailNfsStorage**](docs/NFSApi.md#detailnfsstorage) | **Post** /api/v1/iac/kubernetes/cluster/nfs/detail | Detail NFS Storage
 *NFSApi* | [**ExtendNfsStorage**](docs/NFSApi.md#extendnfsstorage) | **Post** /api/v1/iac/kubernetes/cluster/nfs/add-ons | Extend NFS Storage
+*NodeGroupApi* | [**AllNodeGroup**](docs/NodeGroupApi.md#allnodegroup) | **Get** /api/v1/iac/kubernetes/cluster/{clusterId}/node-group/all | Get all node group
 *NodeGroupApi* | [**CreateNodeGroup**](docs/NodeGroupApi.md#createnodegroup) | **Post** /api/v1/iac/kubernetes/cluster/group/create | Create node group
 *NodeGroupApi* | [**DeleteNodeGroup**](docs/NodeGroupApi.md#deletenodegroup) | **Post** /api/v1/iac/kubernetes/cluster/group/delete | Delete node group
-*NodeGroupApi* | [**DetailNodeGroup**](docs/NodeGroupApi.md#detailnodegroup) | **Post** /api/v1/iac/kubernetes/cluster/group/detail | Get detail node group
+*NodeGroupApi* | [**DetailNodeGroup**](docs/NodeGroupApi.md#detailnodegroup) | **Get** /api/v1/iac/kubernetes/cluster/{clusterId}/node-group/{groupId} | Get detail node group
 *NodeGroupApi* | [**UpdateNodeGroup**](docs/NodeGroupApi.md#updatenodegroup) | **Post** /api/v1/iac/kubernetes/cluster/group/update | Update node group
 
 ## Documentation For Models
@@ -54,6 +58,7 @@ Class | Method | HTTP request | Description
  - [NodeGroupLabel](docs/NodeGroupLabel.md)
  - [NodeGroupTaint](docs/NodeGroupTaint.md)
  - [UpdateNodeGroupRequest](docs/UpdateNodeGroupRequest.md)
+ - [VpcConfig](docs/VpcConfig.md)
 
 ## Documentation For Authorization
 
